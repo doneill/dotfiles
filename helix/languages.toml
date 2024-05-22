@@ -1,0 +1,177 @@
+[[language]]
+name = "kotlin"
+scope = "source.kotlin"
+file-types = ["kt", "kts"]
+roots = ["settings.gradle", "settings.gradle.kts"]
+# comment-tokens = "//"
+indent = { tab-width = 4, unit = "    " }
+language-servers = [ "kotlin-language-server" ]
+
+[[language]]
+name = "typescript"
+language-servers = [ "typescript-language-server", "eslint", "emmit-ls" ]
+# formatter = { command = "prettier", args = [ "--parser", "typescript" ] }
+formatter = { command = "dprint", args = [ "fmt", "--stdin", "typescript" ] }
+auto-format = true
+
+[[language]]
+name = "tsx"
+language-servers = [ "typescript-language-server", "eslint", "emmet-ls" ]
+scope = "source.tsx"
+formatter = { command = "dprint", args = [ "fmt", "--stdin", "tsx" ] }
+injection-regex = "(tsx)" # |typescript
+language-id = "typescriptreact"
+file-types = ["tsx"]
+indent = { tab-width = 2, unit = "  " }
+auto-format = true
+
+[[language]]
+name = "javascript"
+# scope = "source.js"
+# injection-regex = "(js|javascript)"
+# language-id = "javascript"
+# file-types = ["js", "mjs", "cjs", "rules", "es6", "pac", "jakefile"]
+shebangs = ["node"]
+# comment-token = "//"
+language-servers = [ "typescript-language-server", "eslint" ]
+# indent = { tab-width = 2, unit = "  " }
+formatter = { command = "dprint", args = [ "fmt", "--stdin", "javascript" ] }
+auto-format = true
+
+[[language]]
+name = "jsx"
+# scope = "source.jsx"
+# injection-regex = "jsx"
+# language-id = "javascriptreact"
+# file-types = ["jsx"]
+# comment-token = "//"
+language-servers = [ "typescript-language-server", "eslint" ]
+# indent = { tab-width = 2, unit = "  " }
+# grammar = "javascript"
+formatter = { command = "dprint", args = [ "fmt", "--stdin", "jsx" ] }
+auto-format = true
+
+[[language]]
+name = "python"
+scope = "source.python"
+injection-regex = "python"
+file-types = ["py","pyi","py3","pyw","ptl",".pythonstartup",".pythonrc","SConstruct", "rpy", "cpy", "ipy", "pyt", "SConscript"]
+shebangs = ["python"]
+roots = ["pyproject.toml", "setup.py", "poetry.lock", "pyrightconfig.json"]
+# comment-token = "#"
+language-servers = [ "pylsp" ]
+# TODO: pyls needs utf-8 offsets
+indent = { tab-width = 4, unit = "    " }
+
+[[language]]
+name = "rust"
+scope = "source.rust"
+injection-regex = "rust"
+file-types = ["rs"]
+roots = ["Cargo.toml", "Cargo.lock"]
+auto-format = true
+# comment-token = "//"
+language-servers = [ "rust-analyzer" ]
+indent = { tab-width = 4, unit = "    " }
+
+[[language]]
+name = "sql"
+scope = "source.sql"
+file-types = ["sq", "sql", "dsql"]
+# comment-token = "--"
+indent = { tab-width = 4, unit = "    " }
+injection-regex = "sql"
+
+
+[[grammar]]
+name = "sql"
+source = { git = "https://github.com/DerekStride/tree-sitter-sql", rev = "eeab7240a11098724e6f95bc57cc3ceaf5487d5f" }
+
+[[grammar]]
+name = "typescript"
+source = { git = "https://github.com/tree-sitter/tree-sitter-typescript", rev = "b1bf4825d9eaa0f3bdeb1e52f099533328acfbdf", subpath = "typescript" }
+
+# [language.debugger]
+# name = "node-debug2"
+# command = "node"
+# transport = "stdio"
+# quirks = { absolute-paths = true }
+# args = ["/home/dano/dev/github/js/vscode-node-debug2/src/nodeDebug.ts"]
+
+# [language.debugger]
+# name = "lldb-vscode"
+# transport = "stdio"
+# command = "lldb-vscode"
+
+# [[language.debugger.templates]]
+# name = "binary"
+# request = "launch"
+# completion = [ { name = "binary", completion = "filename" } ]
+# args = { program = "{0}" }
+
+# [[language.debugger.templates]]
+# name = "binary (terminal)"
+# request = "launch"
+# completion = [ { name = "binary", completion = "filename" } ]
+# args = { program = "{0}", runInTerminal = true }
+
+# [[language.debugger.templates]]
+# name = "attach"
+# request = "attach"
+# completion = [ "pid" ]
+# args = { pid = "{0}" }
+
+# [[language.debugger.templates]]
+# name = "gdbserver attach"
+# request = "attach"
+# completion = [ { name = "lldb connect url", default = "connect://localhost:3333" }, { name = "file", completion = "filename" }, "pid" ]
+# args = { attachCommands = [ "platform select remote-gdb-server", "platform connect {0}", "file {1}", "attach {2}" ] }
+
+[language-server]
+kotlin-language-server = { command = "kotlin-language-server" }
+pylsp = { command = "pylsp" }
+
+[language-server.eslint]
+command = "vscode-eslint-language-server"
+args = ["--stdio"]
+
+[language-server.eslint.config]
+codeActionsOnSave = { mode = "all", "source.fixAll.eslint" = true }
+format = { enable = true }
+nodePath = ""
+quiet = false
+rulesCustomizations = []
+run = "onType"
+validate = "on"
+experimental = {}
+problems = { shortenToSingleLine = false }
+
+[language-server.eslint.config.codeAction]
+disableRuleComment = { enable = true, location = "separateLine" }
+showDocumentation = { enable = false }
+
+[language-server.vscode-json-language-server.config]
+json = { validate = { enable = true }, format = { enable = true } }
+provideFormatter = true
+
+[language-server.vscode-css-language-server.config]
+css = { validate = { enable = true } }
+scss = { validate = { enable = true } }
+less = { validate = { enable = true } }
+provideFormatter = true
+
+[language-server.typescript-language-server]
+command = "typescript-language-server"
+args = ["--stdio"]
+config.hostInfo = "helix"
+
+[language-server.rust-analyzer]
+command = "rust-analyzer"
+
+[language-server.rust-analyzer.config]
+inlayHints.bindingModeHints.enable = false
+inlayHints.closingBraceHints.minLines = 10
+inlayHints.closureReturnTypeHints.enable = "with_block"
+inlayHints.discriminantHints.enable = "fieldless"
+inlayHints.lifetimeElisionHints.enable = "skip_trivial"
+inlayHints.typeHints.hideClosureInitialization = false
