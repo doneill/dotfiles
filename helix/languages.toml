@@ -1,11 +1,20 @@
 [[language]]
 name = "kotlin"
 scope = "source.kotlin"
+injection-regex = "kotlin"
 file-types = ["kt", "kts"]
-roots = ["settings.gradle", "settings.gradle.kts"]
-# comment-tokens = "//"
+shebangs = ["kotlin"]
+roots = ["settings.gradle", "settings.gradle.kts", "build.gradle", "build.gradle.kts"]
+comment-token = "//"
+language-servers = ["kotlin-language-server"]
 indent = { tab-width = 4, unit = "    " }
-language-servers = [ "kotlin-language-server" ]
+
+[[language]]
+name = "java"
+scope = "source.java"
+file-types = ["java"]
+roots = ["pom.xml", "build.gradle", ".git"]
+language-servers = ["jdtls"]
 
 [[language]]
 name = "typescript"
@@ -52,6 +61,18 @@ formatter = { command = "dprint", args = [ "fmt", "--stdin", "jsx" ] }
 auto-format = true
 
 [[language]]
+name = "lua"
+injection-regex = "lua"
+scope = "source.lua"
+file-types = ["lua"]
+shebangs = ["lua", "luajit"]
+roots = [".luarc.json", ".luacheckrc", ".stylua.toml", "selene.toml", ".git"]
+comment-token = "--"
+block-comment-tokens = { start = "--[[", end = "--]]" }
+indent = { tab-width = 2, unit = "  " }
+language-servers = [ "lua-language-server" ]
+
+[[language]]
 name = "python"
 scope = "source.python"
 injection-regex = "python"
@@ -73,6 +94,14 @@ auto-format = true
 # comment-token = "//"
 language-servers = [ "rust-analyzer" ]
 indent = { tab-width = 4, unit = "    " }
+
+[[language]]
+name = "scala"
+scope = "source.scala"
+file-types = ["scala", "sbt", "sc"]
+roots = ["build.sbt", "build.sc"]
+language-servers = ["metals"]
+indent = { tab-width = 2, unit = "  " }
 
 [[language]]
 name = "sql"
@@ -128,7 +157,6 @@ source = { git = "https://github.com/tree-sitter/tree-sitter-typescript", rev = 
 # args = { attachCommands = [ "platform select remote-gdb-server", "platform connect {0}", "file {1}", "attach {2}" ] }
 
 [language-server]
-kotlin-language-server = { command = "kotlin-language-server" }
 pylsp = { command = "pylsp" }
 
 [language-server.eslint]
@@ -149,6 +177,29 @@ problems = { shortenToSingleLine = false }
 [language-server.eslint.config.codeAction]
 disableRuleComment = { enable = true, location = "separateLine" }
 showDocumentation = { enable = false }
+
+[language-server.jdtls]
+command = "jdtls"
+args = ["-data", "~/.cache/jdtls/workspace"]
+
+[language-server.kotlin]
+command = "kotlin-language-server"
+environment = { JAVA_HOME = "/opt/homebrew/opt/openjdk@21" }
+
+[language-server.metals]
+command = "metals"
+args = []
+
+[language-server.lua-language-server]
+command = "lua-language-server"
+
+[language-server.lua-language-server.config.Lua.hint]
+enable = true
+arrayIndex = "Enable"
+setType = true
+paramName = "All"
+paramType = true
+await = true
 
 [language-server.vscode-json-language-server.config]
 json = { validate = { enable = true }, format = { enable = true } }
