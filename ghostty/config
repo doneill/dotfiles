@@ -1,0 +1,20 @@
+# Fonts
+font-family = "JetBrainsMono Nerd Font"
+font-size = 14
+
+# Theme
+theme = tokyonight-storm
+background-opacity = 0.98
+background-blur-radius = 20
+#window-theme = auto
+
+# Window
+window-padding-x = 10
+window-padding-y = 10
+window-padding-balance = true
+macos-titlebar-style = hidden
+
+# Other
+keybind = global:cmd+s=toggle_quick_terminal
+copy-on-select = clipboard
+#shell-integration-features = cursor,sudo,no-title
